@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <form id="taskForm">
+        <input type="text" id="newTask" placeholder="Enter a new task">
+        <button type="submit" id="submit" disabled>Add Task</button>
+    </form>
+
+    <ul id="taskList">
+        <!-- New tasks will be added here -->
+    </ul>
+
+    <script>
+        // Query for the submit button and input field once and store them in variables
+        const submit = document.getElementById('submit');
+        const newTask = document.getElementById('newTask');
+        const taskList = document.getElementById('taskList');
+
+        // Disable the submit button by default
+        submit.disabled = true;
+
+        // Listen for input in the input field
+        newTask.addEventListener('input', function() {
+            // Enable the submit button if the input field has text, otherwise disable it
+            if (newTask.value.trim() !== "") {
+                submit.disabled = false;
+            } else {
+                submit.disabled = true;
+            }
+        });
+
+        // Listen for form submission
+        document.getElementById('taskForm').addEventListener('submit', function(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            // Get the task the user just submitted
+            const task = newTask.value.trim();
+
+            if (task !== "") {
+                // Create a new list item for the task
+                const listItem = document.createElement('li');
+                listItem.textContent = task;
+
+                // Add the new list item to the unordered list
+                taskList.append(listItem);
+
+                // Clear the input field and disable the submit button again
+                newTask.value = '';
+                submit.disabled = true;
+            }
+
+            return false; // Prevent default form submission behavior
+        });
+    </script>
+</body>
+</html>
